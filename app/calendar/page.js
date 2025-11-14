@@ -1,4 +1,4 @@
-export default function HomePage() {
+export default function CalendarPage() {
   return (
     <div style={{ 
       minHeight: 'calc(100vh - 90px)', 
