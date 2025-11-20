@@ -66,9 +66,13 @@
 
 
 /* === Media Query untuk Desktop (lebar > 768px) === */
+/* ... kode mobile sebelumnya biarkan sama ... */
+
+/* === Media Query untuk Desktop (lebar > 768px) === */
 @media (min-width: 768px) {
   .container {
     flex-direction: row;
+    background-color: #f8fafc; /* Background abu muda untuk area dashboard */
   }
 
   .bottomNav {
@@ -78,19 +82,19 @@
   .sidebar {
     display: flex;
     flex-direction: column;
-    width: 280px;
-    min-height: 100vh;
+    width: 260px; /* Sidebar sedikit lebih ramping */
+    height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
-    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    background: #ffffff;
     border-right: 1px solid #e2e8f0;
     padding: 2rem 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+    z-index: 50;
   }
 
   .sidebarContent {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -100,39 +104,33 @@
     flex-direction: row;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: #475569;
-    border-radius: 12px;
-    transition: all 0.3s ease;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    width: 100%;
   }
 
   .navLink:hover {
-    background-color: #e2e8f0;
-    color: #334155;
-    transform: translateX(4px);
+    background-color: #f1f5f9;
+    color: #0f172a;
   }
   
   .navLink.active {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background-color: #1f2937; /* Warna gelap sesuai tema */
     color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
   }
 
-  .navLink.active:hover {
-    transform: translateX(4px);
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-  }
-
+  /* PERBAIKAN UTAMA DI SINI */
   .mainContent {
-    margin-left: 280px;
-    padding: 0;
+    margin-left: 260px; /* Sesuaikan dengan lebar sidebar */
+    padding: 2rem; /* Padding yang nyaman */
     padding-bottom: 2rem;
-    width: calc(100% - 280px);
+    width: calc(100% - 260px);
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block; /* JANGAN FLEX CENTER */
+    background-color: #f8fafc; 
   }
-}   
+}
