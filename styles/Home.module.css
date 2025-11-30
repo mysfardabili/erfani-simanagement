@@ -1,0 +1,165 @@
+/* === MOBILE FIRST (Tampilan Dasar HP) === */
+.container {
+  padding: 1.5rem;
+  padding-bottom: 120px; /* Ruang lebih untuk bottom nav */
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fafafa;
+  margin: 0 auto;
+}
+
+/* --- Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatarWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #fbcfe8;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.greetingText {
+  font-size: 1.5rem;
+  font-weight: 800;
+  /* Gradient text mirip gambar */
+  background: linear-gradient(to right, #a855f7, #f97316); 
+  -webkit-background-clip: text;
+  background-clip: text; /* PERBAIKAN: Menambahkan properti standar */
+  -webkit-text-fill-color: transparent;
+  font-family: sans-serif;
+  line-height: 1.2;
+}
+
+.decoration {
+  /* Placeholder untuk ilustrasi baju di kanan atas */
+  font-size: 2.5rem; 
+  opacity: 0.8;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* --- Hero Pill (Tombol Panjang) --- */
+.heroPill {
+  background: white;
+  border-radius: 50px;
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  margin-bottom: 2.5rem;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroPill:active {
+  transform: scale(0.96);
+}
+
+.heroText {
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text; /* PERBAIKAN: Menambahkan properti standar */
+  -webkit-text-fill-color: transparent;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* --- Banner Iklan --- */
+.bannerContainer {
+  display: flex;
+  flex-direction: column; /* Mobile: Atas-Bawah */
+  gap: 1.5rem;
+}
+
+.bannerCard {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  position: relative;
+  border: 4px solid white;
+  aspect-ratio: 16/9; /* Rasio gambar landscape standar */
+}
+
+.bannerCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  border-color: #fce7f3;
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Gambar akan mengisi kotak penuh */
+  display: block;
+}
+
+/* === DESKTOP / WEB RESPONSIVE (Layar > 768px) === */
+@media (min-width: 768px) {
+  .container {
+    padding: 3rem 4rem;
+    max-width: 1200px; /* Membatasi lebar konten di layar besar */
+  }
+
+  .header {
+    margin-bottom: 3rem;
+  }
+
+  .avatarWrapper {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+
+  .greetingText {
+    font-size: 2.5rem; /* Font lebih besar di desktop */
+  }
+
+  .heroPill {
+    padding: 1.5rem 3rem;
+    max-width: 600px; /* Batasi lebar tombol agar tidak sepanjang layar */
+    margin: 0 auto 4rem auto; /* Tengahkan tombol */
+  }
+
+  .heroText {
+    font-size: 1.4rem;
+  }
+
+  /* Layout Banner menjadi Grid 2 Kolom */
+  .bannerContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Kolom Sebelah-sebelahan */
+    gap: 2.5rem;
+  }
+}

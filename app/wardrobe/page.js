@@ -1,153 +1,178 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { 
-  HiOutlineHeart, 
-  HiHeart,
-  HiOutlineAdjustmentsHorizontal, 
-  HiPlus,
-  HiMagnifyingGlass
+  HiPlus, 
+  HiEllipsisVertical, 
+  HiOutlineBookmark, 
+  HiOutlineSquares2X2, 
+  HiOutlineChartBar, 
+  HiChevronRight,
+  HiMagnifyingGlass,
+  HiOutlineHeart,
+  HiOutlineEye,
+  HiOutlineAdjustmentsHorizontal
 } from 'react-icons/hi2';
 import styles from '@/styles/Lemari.module.css';
+import { wardrobeData } from '../data/items';
 
-// Data Dummy dengan Gambar Asli (Unsplash)
-const initialItems = [
-  { id: 1, title: 'Wide Leg Trousers', category: 'Pants', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&q=80', type: 'pants', liked: false },
-  { id: 2, title: 'Casual Striped Shirt', category: 'Top', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80', type: 'top', liked: true },
-  { id: 3, title: 'White Sneakers', category: 'Shoes', image: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=500&q=80', type: 'shoes', liked: false },
-  { id: 4, title: 'Leather Handbag', category: 'Bag', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&q=80', type: 'bag', liked: false },
-  { id: 5, title: 'Denim Jacket', category: 'Outer', image: 'https://images.unsplash.com/photo-1523205565295-f8e91625443b?w=500&q=80', type: 'outer', liked: false },
-  { id: 6, title: 'Summer Hat', category: 'Accessories', image: 'https://images.unsplash.com/photo-1533055640609-24b498dfd74c?w=500&q=80', type: 'hat', liked: false },
-];
-
-export default function HomePage() {
+export default function WardrobePage() {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [items, setItems] = useState(initialItems);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Kategori UI mapping ke Data Category
   const categories = [
-    { label: 'All', id: 'All', icon: '⚡' },
-    { label: 'Outer', id: 'outer', icon: '🧥' },
-    { label: 'Pants', id: 'pants', icon: '👖' },
-    { label: 'Bags', id: 'bag', icon: '👜' },
-    { label: 'Shoes', id: 'shoes', icon: '👟' },
-    { label: 'Hats', id: 'hat', icon: '🧢' },
+    { label: 'All', value: 'All', icon: '👜' }, // Icon tas sebagai simbol All/Bag
+    { label: 'Bags', value: 'bag', icon: '👜' }, // Karena di data items.js belum ada 'bag', ini placeholder
+    { label: 'Bottoms', value: 'bawahan', icon: '👖' },
+    { label: 'Footwear', value: 'sepatu', icon: '👟' },
+    { label: 'Tops', value: 'atasan', icon: '🧥' },
   ];
 
-  // Fungsi Filter
-  const filteredItems = items.filter(item => {
-    const matchCategory = activeCategory === 'All' || item.type === activeCategory;
-    const matchSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchCategory && matchSearch;
-  });
-
-  // Fungsi Toggle Like
-  const toggleLike = (id) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, liked: !item.liked } : item
-    ));
-  };
-
-  // Fungsi Alert Mock
-  const handleAction = (action) => {
-    alert(`Fitur "${action}" akan segera hadir!`);
-  };
+  // Filter Logic
+  const filteredItems = useMemo(() => {
+    return wardrobeData.filter(item => {
+      const matchCat = activeCategory === 'All' || item.category === activeCategory;
+      const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }, [activeCategory, searchQuery]);
 
   return (
     <div className={styles.container}>
-      {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.greeting}>
-          <h1>Hallo, Erfani 👋</h1>
-          <p style={{ color: '#64748b', marginTop: '4px' }}>Siap untuk tampil keren hari ini?</p>
-        </div>
-        <div className={styles.avatar} onClick={() => handleAction('Profile Settings')}>👩🏻</div>
-      </header>
-
-      {/* Statistics Cards */}
-      <div className={styles.statsContainer}>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>{items.length}</span>
-          <span className={styles.statLabel}>Total Items</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>5</span>
-          <span className={styles.statLabel}>Outfits Created</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statValue}>{categories.length - 1}</span>
-          <span className={styles.statLabel}>Categories</span>
+      
+      {/* 1. Purple Header Background */}
+      <div className={styles.purpleHeader}>
+        <div className={styles.headerTopRow}>
+          <HiEllipsisVertical className={styles.menuDotIcon} />
         </div>
       </div>
 
-      {/* Toolbar */}
-      <div className={styles.toolbar}>
-        <div className={styles.searchWrapper}>
-          <HiMagnifyingGlass className={styles.searchIcon} size={20} />
+      {/* 2. Profile Card (Floating) */}
+      <div className={styles.profileSection}>
+        {/* Icons Top Right */}
+
+        {/* Avatar with Progress */}
+        <div className={styles.avatarContainer}>
+          <div className={styles.avatarCircle}>
+            <span className={styles.avatarText}>E</span>
+          </div>
+        </div>
+
+        {/* Info */}
+        <h2 className={styles.userName}>Erfani</h2>
+        <p className={styles.userHandle}>@fanyzkrf</p>
+
+        {/* Stats */}
+        <div className={styles.statsRow}>
+          <div className={`${styles.statItem} ${styles.activeStat}`}>
+            <span className={styles.statCount}>{wardrobeData.length}</span>
+            <span className={styles.statLabel}>Items</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statCount}>1</span>
+            <span className={styles.statLabel}>Outfits</span>
+          </div>
+          <div className={styles.statItem}>
+            <span className={styles.statCount}>0</span>
+            <span className={styles.statLabel}>Lookbooks</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Schedule Banner */}
+      <div className={styles.scheduleBanner}>
+        <div>
+          <div className={styles.bannerTitle}>Schedule an outfit</div>
+          <div className={styles.bannerSubtitle}>Set up 50% complete</div>
+        </div>
+        <HiChevronRight size={20} color="#9ca3af" />
+      </div>
+
+      {/* 4. Category Filters (Circles) */}
+      <div className={styles.categoriesScroll}>
+        {categories.map((cat) => (
+          <div 
+            key={cat.label} 
+            className={`${styles.catItem} ${activeCategory === cat.value ? styles.active : ''}`}
+            onClick={() => setActiveCategory(cat.value)}
+          >
+            <div className={styles.catCircle}>
+              {/* Gambar Tas di 'All' sesuai desain */}
+              {cat.label === 'All' ? (
+                <img 
+                  src="https://cdn-icons-png.flaticon.com/512/2954/2954888.png" 
+                  alt="All" width={30} height={30} 
+                  style={{opacity: 0.8}}
+                />
+              ) : (
+                <span>{cat.icon}</span>
+              )}
+            </div>
+            <span className={styles.catLabel}>{cat.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* 5. Search & Filter Toolbar */}
+      <div className={styles.searchToolbar}>
+        <div className={styles.searchBox}>
+          <HiMagnifyingGlass size={20} color="#9ca3af" />
           <input 
             type="text" 
-            placeholder="Cari pakaianmu..." 
+            placeholder="Search" 
             className={styles.searchInput}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <button className={styles.iconBtn} onClick={() => handleAction('Filter Favorites')}>
-          <HiOutlineHeart size={24} />
-        </button>
-        <button className={styles.iconBtn} onClick={() => handleAction('Advanced Filter')}>
-          <HiOutlineAdjustmentsHorizontal size={24} />
-        </button>
+        <button className={styles.squareBtn}><HiOutlineHeart size={22} /></button>
+        <button className={styles.squareBtn}><HiOutlineEye size={22} /></button>
+        <button className={styles.squareBtn}><HiOutlineAdjustmentsHorizontal size={22} /></button>
       </div>
 
-      {/* Category Pills */}
-      <div className={styles.categoriesRow}>
-        {categories.map((cat) => (
-          <button 
-            key={cat.id} 
-            className={`${styles.catBtn} ${activeCategory === cat.id ? styles.active : ''}`}
-            onClick={() => setActiveCategory(cat.id)}
-          >
-            <span>{cat.icon}</span>
-            <span>{cat.label}</span>
-          </button>
+      {/* 6. Grid Items */}
+      <div className={styles.grid}>
+        {filteredItems.map((item) => (
+          <div key={item.id} className={styles.card}>
+            <div className={styles.imageWrapper}>
+              <Image 
+                src={item.src} 
+                alt={item.name}
+                fill
+                className={styles.cardImage}
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Product Grid */}
-      <div className={styles.productGrid}>
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item) => (
-            <div key={item.id} className={styles.card} onClick={() => handleAction(`View ${item.title}`)}>
-              <div className={styles.imageWrapper}>
-                 <button 
-                   className={`${styles.heartBtn} ${item.liked ? styles.liked : ''}`}
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     toggleLike(item.id);
-                   }}
-                 >
-                   {item.liked ? <HiHeart size={20} /> : <HiOutlineHeart size={20} />}
-                 </button>
-                 <img src={item.image} alt={item.title} className={styles.cardImage} />
-              </div>
-              <div className={styles.cardInfo}>
-                <h3 className={styles.cardTitle}>{item.title}</h3>
-                <p className={styles.cardCategory}>{item.category}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
-            <p>Tidak ada item yang ditemukan 😔</p>
+      {/* === MENU POPUP & FAB (Tetap Ada) === */}
+      {isMenuOpen && (
+        <>
+          <div className={styles.overlay} onClick={() => setIsMenuOpen(false)} />
+          <div className={styles.menuPopup}>
+            <button className={styles.menuItem} onClick={() => alert('Add items')}>Add items</button>
+            <button className={styles.menuItem} onClick={() => alert('Create outfit')}>Create an outfit</button>
+            <button className={styles.menuItem} onClick={() => alert('Create lookbook')}>Create lookbook</button>
           </div>
-        )}
-      </div>
+        </>
+      )}
 
-      {/* FAB */}
-      <button className={styles.fab} onClick={() => handleAction('Add New Item')}>
+      <button 
+        className={styles.fab} 
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        style={{
+          transform: isMenuOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+          backgroundColor: isMenuOpen ? '#374151' : '#1f2937'
+        }}
+      >
         <HiPlus size={28} />
       </button>
+
     </div>
   );
 }

@@ -1,0 +1,219 @@
+/* Container Utama */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfbf7;
+  position: relative;
+  overflow: hidden;
+}
+
+/* === AREA VISUAL (MOBILE: ATAS) === */
+.canvasSection {
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 4rem; 
+  position: relative;
+  background-color: #fdfbf7;
+  max-height: 55vh; 
+}
+
+.mannequinStage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 250px; 
+}
+
+/* Slot Item Responsif */
+.slotItem {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* Styling Tumpukan Manekin (Mobile) */
+.slotTop { height: 160px; z-index: 10; margin-bottom: -20px; }
+.slotBottom { height: 200px; z-index: 5; margin-bottom: -30px; }
+.slotShoes { height: 80px; z-index: 1; }
+
+.itemImage {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+}
+
+/* Placeholder */
+.placeholder {
+  width: 100%; height: 100%;
+  border: 2px dashed #d1d5db; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: #9ca3af; font-size: 0.8rem;
+}
+
+/* Tombol Info (FIXED: flex-direction) */
+.infoButtons {
+  position: absolute; 
+  top: 1rem; 
+  right: 1rem;
+  display: flex; 
+  flex-direction: column; /* Sudah diperbaiki dari flexDirection */
+  gap: 0.5rem; 
+  z-index: 20;
+}
+
+.infoChip {
+  background: rgba(55, 65, 81, 0.9); 
+  color: white;
+  padding: 0.3rem 0.8rem; 
+  border-radius: 15px;
+  font-size: 0.7rem; 
+  font-weight: 600; 
+  border: none;
+}
+
+/* === PANEL KONTROL (BAGIAN MIX & MATCH) === */
+.controlPanel {
+  height: 45vh; 
+  width: 100%;
+  background-color: #ffffff;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 0 1.5rem; 
+  z-index: 50;
+  position: relative;
+}
+
+/* Header Panel */
+.panelHeader {
+  flex-shrink: 0; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.handleBar {
+  width: 40px; height: 4px;
+  background-color: #e5e7eb; border-radius: 10px;
+  margin: 0 auto 10px auto; flex-shrink: 0;
+}
+
+.panelTitle {
+  font-size: 1.1rem; font-weight: 700; color: #1f2937;
+}
+
+.saveButton {
+  background-color: #1f2937; color: white; border: none;
+  padding: 0.5rem 1rem; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600; cursor: pointer;
+}
+
+/* Tabs Kategori */
+.tabsContainer {
+  flex-shrink: 0; 
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 10px;
+}
+
+.tabButton {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 1px solid #e5e7eb;
+  background: white; color: #6b7280;
+  font-size: 0.8rem; white-space: nowrap; transition: all 0.2s;
+}
+
+.tabButton.active {
+  background: #1f2937; color: white; border-color: #1f2937;
+}
+
+/* Grid Item */
+.itemsGrid {
+  flex: 1; 
+  overflow-y: auto; 
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 0.8rem;
+  padding-bottom: 100px; 
+  padding-top: 5px;
+}
+
+.itemCard {
+  background: white;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  aspect-ratio: 1 / 1; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem; 
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.itemCard.selected {
+  border: 2px solid #1f2937; 
+  background-color: #f9fafb;
+}
+
+.itemThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+}
+
+.historySection {
+  display: none; 
+}
+
+/* === DESKTOP RESPONSIVE === */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    height: 100vh;
+    padding-bottom: 0;
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  .canvasSection {
+    flex: 1; height: 100%; max-height: none;
+    padding-top: 0; border-right: 1px solid #e5e7eb;
+  }
+
+  .slotTop { height: 280px; margin-bottom: -30px; }
+  .slotBottom { height: 320px; margin-bottom: -50px; }
+  .slotShoes { height: 150px; }
+
+  .controlPanel {
+    flex: 1; height: 100%; width: auto;
+    border-radius: 0; padding: 3rem; box-shadow: none;
+  }
+
+  .handleBar { display: none; }
+
+  .itemsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1.2rem;
+  }
+  
+  .historySection {
+    display: block; 
+    margin-top: 2rem;
+  }
+}

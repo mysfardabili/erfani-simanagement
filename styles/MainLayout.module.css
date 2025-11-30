@@ -69,7 +69,76 @@
 /* ... kode mobile sebelumnya biarkan sama ... */
 
 /* === Media Query untuk Desktop (lebar > 768px) === */
+/* ... kode mobile di atas biarkan sama ... */
+
+/* === Media Query untuk Desktop (lebar > 768px) === */
 @media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    background-color: #f8fafc;
+  }
+
+  .bottomNav {
+    display: none;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    padding: 2rem 0;
+    z-index: 50;
+  }
+
+  .sidebarContent {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .navLink {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+
+  .navLink:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+  }
+  
+  .navLink.active {
+    background-color: #1f2937;
+    color: white;
+  }
+
+  /* === PERBAIKAN PENTING DI SINI === */
+  .mainContent {
+    margin-left: 260px; /* Memberi ruang untuk sidebar */
+    
+    /* UBAH INI: Hapus padding agar konten bisa mentok ke tepi */
+    padding: 0; 
+    
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    display: block;
+    background-color: #f8fafc;
+  }
+}@media (min-width: 768px) {
   .container {
     flex-direction: row;
     background-color: #f8fafc; /* Background abu muda untuk area dashboard */

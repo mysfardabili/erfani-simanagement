@@ -1,7 +1,8 @@
-'use client'; // Wajib untuk hooks seperti usePathname
+'use client'; 
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
+import { useState, useEffect } from 'react'; // Import React Hooks
 import {
   HiOutlineGlobeAlt,
   HiOutlineCalendar,
@@ -9,8 +10,8 @@ import {
   HiOutlineArchiveBox,
 } from 'react-icons/hi2';
 import styles from '@/styles/MainLayout.module.css';
+import SplashScreen from './SplashScreen'; // Import SplashScreen disini
 
-// 1. Definisikan item navigasi kita
 const navItems = [
   { href: '/', icon: HiOutlineGlobeAlt, label: 'Beranda' },
   { href: '/calendar', icon: HiOutlineCalendar, label: 'Kalender' },
@@ -20,8 +21,26 @@ const navItems = [
 
 export default function MainLayout({ children }) {
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Helper untuk membuat satu link
+  // --- STATE UNTUK ALUR APLIKASI ---
+  // Default true agar saat pertama load langsung muncul splash
+  const [showSplash, setShowSplash] = useState(true); 
+
+  // Fungsi yang dijalankan setelah Splash Screen selesai (2.5 detik)
+  const handleSplashFinish = () => {
+    setShowSplash(false);
+    // Setelah splash selesai, redirect ke halaman Login
+    // Tapi hanya jika kita sedang di root ('/') agar user tidak kaget
+    if (pathname === '/') {
+      router.push('/login');
+    }
+  };
+
+  // --- LOGIKA NAVIGASI ---
+  const disableNav = ['/login', '/register'];
+  const isAuthPage = disableNav.includes(pathname);
+
   const NavLink = ({ href, icon: Icon, label }) => {
     const isActive = pathname === href;
     return (
@@ -37,24 +56,35 @@ export default function MainLayout({ children }) {
 
   return (
     <div className={styles.container}>
-      {/* 2. Navigasi Samping (HANYA TAMPIL DI DESKTOP) */}
-      <nav className={styles.sidebar}>
-        <div className={styles.sidebarContent}>
+      {/* Tampilkan Splash Screen jika showSplash masih true.
+        SplashScreen punya z-index tinggi jadi akan menutupi konten lain.
+      */}
+      {showSplash && <SplashScreen onFinish={handleSplashFinish} />}
+
+      {/* Sidebar Desktop */}
+      {!isAuthPage && (
+        <nav className={styles.sidebar}>
+          <div className={styles.sidebarContent}>
+            {navItems.map((item) => (
+              <NavLink key={item.href} {...item} />
+            ))}
+          </div>
+        </nav>
+      )}
+
+      {/* Konten Utama */}
+      <main className={styles.mainContent} style={isAuthPage ? { marginLeft: 0, width: '100%', padding: 0 } : {}}>
+        {children}
+      </main>
+
+      {/* Bottom Nav Mobile */}
+      {!isAuthPage && (
+        <nav className={styles.bottomNav}>
           {navItems.map((item) => (
             <NavLink key={item.href} {...item} />
           ))}
-        </div>
-      </nav>
-
-      {/* 3. Konten Halaman Utama */}
-      <main className={styles.mainContent}>{children}</main>
-
-      {/* 4. Navigasi Bawah (HANYA TAMPIL DI MOBILE) */}
-      <nav className={styles.bottomNav}>
-        {navItems.map((item) => (
-          <NavLink key={item.href} {...item} />
-        ))}
-      </nav>
+        </nav>
+      )}
     </div>
   );
 }

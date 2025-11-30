@@ -1,216 +1,176 @@
 'use client';
 
-import { useState } from 'react';
-import StylingMenu from '../components/StylingMenu';
+import { useState, useMemo } from 'react';
+import Image from 'next/image';
+import styles from '@/styles/Styling.module.css';
+import { wardrobeData } from '../data/items';
 
 export default function StylingPage() {
-  const [activeLayout, setActiveLayout] = useState('dice');
+  const [activeTab, setActiveTab] = useState('atasan');
+  
+  // --- STATE SAFE INITIALIZATION (Mencegah White Screen) ---
+  // Cari item pertama untuk setiap kategori sebagai default. 
+  // Jika tidak ketemu, pakai fallback object kosong agar tidak crash.
+  const defaultTop = wardrobeData.find(i => i.category === 'atasan') || {};
+  const defaultBottom = wardrobeData.find(i => i.category === 'bawahan') || {};
+  const defaultShoes = wardrobeData.find(i => i.category === 'sepatu') || {};
 
-  const renderContent = () => {
-    const contentMap = {
-      layout1: {
-        title: 'Layout Kolom',
-        description: 'Tampilan dengan layout berbasis kolom yang terstruktur',
-        color: '#dbeafe',
-        emoji: '📐'
-      },
-      layout2: {
-        title: 'Layout Grid 2x2',
-        description: 'Tampilan dengan layout grid 2x2 yang simetris',
-        color: '#fce7f3',
-        emoji: '📱'
-      },
-      layout3: {
-        title: 'Layout Grup',
-        description: 'Tampilan dengan layout grup yang fleksibel',
-        color: '#e0e7ff',
-        emoji: '📋'
-      },
-      dice: {
-        title: 'Layout Acak',
-        description: 'Tampilan dengan layout yang diacak secara otomatis',
-        color: '#fef3c7',
-        emoji: '🎲'
-      }
-    };
+  const [currentOutfit, setCurrentOutfit] = useState({
+    atasan: defaultTop,
+    bawahan: defaultBottom,
+    sepatu: defaultShoes
+  });
 
-    const content = contentMap[activeLayout] || contentMap.dice;
+  // State Riwayat Design
+  const [savedDesigns, setSavedDesigns] = useState([]);
 
-    return (
-      <div className="content-card" style={{ backgroundColor: content.color }}>
-        <div className="content-icon">{content.emoji}</div>
-        <h2 className="content-title">{content.title}</h2>
-        <p className="content-description">{content.description}</p>
-      </div>
-    );
+  // Filter data untuk Grid di bawah
+  const filteredItems = useMemo(() => {
+    return wardrobeData.filter(item => item.category === activeTab);
+  }, [activeTab]);
+
+  const handleSelectItem = (item) => {
+    setCurrentOutfit(prev => ({ ...prev, [activeTab]: item }));
   };
 
+  const handleSaveDesign = () => {
+    // Validasi sederhana: pastikan outfit lengkap sebelum simpan
+    if(currentOutfit.atasan.id && currentOutfit.bawahan.id && currentOutfit.sepatu.id) {
+        setSavedDesigns([{ id: Date.now(), ...currentOutfit }, ...savedDesigns]);
+        alert("Outfit berhasil disimpan ke 'Design Terakhir'!");
+    } else {
+        alert("Pilih outfit lengkap dulu!");
+    }
+  };
+
+  const handleLoadDesign = (design) => {
+    setCurrentOutfit({
+      atasan: design.atasan,
+      bawahan: design.bawahan,
+      sepatu: design.sepatu
+    });
+  };
+
+  const tabs = [
+    { id: 'atasan', label: 'Atasan' },
+    { id: 'bawahan', label: 'Bawahan' },
+    { id: 'sepatu', label: 'Sepatu' },
+  ];
+
   return (
-    <div className="styling-page">
-      <div className="styling-container">
-        <div className="styling-header">
-          <h1>Halaman Styling</h1>
-          <p>Pilih layout favorit Anda dari menu di bawah</p>
-        </div>
-
-        {/* Menu hanya untuk Desktop - tampil di atas konten */}
-        <div className="desktop-menu">
-          <StylingMenu
-            activeLayout={activeLayout}
-            onLayoutChange={setActiveLayout}
-          />
-        </div>
-
-        <div className="content-wrapper">
-          {renderContent()}
-        </div>
-      </div>
-
-      {/* Menu untuk Mobile - fixed di bawah */}
-      <div className="mobile-menu">
-        <StylingMenu
-          activeLayout={activeLayout}
-          onLayoutChange={setActiveLayout}
-        />
-      </div>
+    <div className={styles.container}>
       
-      <style jsx global>{`
-        .styling-page {
-          min-height: calc(100vh - 90px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 1rem;
-          padding-bottom: 160px; /* Ruang untuk menu floating + bottom nav */
-        }
+      {/* === VISUAL AREA === */}
+      <div className={styles.canvasSection}>
+        <div className={styles.infoButtons}>
+          <button className={styles.infoChip}>TB 170</button>
+          <button className={styles.infoChip}>BB 60</button>
+        </div>
 
-        .styling-container {
-          width: 100%;
-          max-width: 600px;
-          margin: 0 auto;
-        }
+        <div className={styles.mannequinStage}>
+          {/* Layer Atasan */}
+          <div className={styles.slotItem + ' ' + styles.slotTop}>
+            {currentOutfit.atasan.src ? (
+              <Image 
+                src={currentOutfit.atasan.src} 
+                alt="Atasan" 
+                width={300} height={300} 
+                className={styles.itemImage} 
+                priority
+              />
+            ) : <div className={styles.placeholder}>Pilih Atasan</div>}
+          </div>
 
-        .styling-header {
-          text-align: center;
-          margin-bottom: 1.5rem;
-        }
+          {/* Layer Bawahan */}
+          <div className={styles.slotItem + ' ' + styles.slotBottom}>
+            {currentOutfit.bawahan.src ? (
+              <Image 
+                src={currentOutfit.bawahan.src} 
+                alt="Bawahan" 
+                width={300} height={300} 
+                className={styles.itemImage}
+              />
+            ) : <div className={styles.placeholder}>Pilih Bawahan</div>}
+          </div>
 
-        .styling-header h1 {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #1f2937;
-          margin-bottom: 0.5rem;
-        }
+          {/* Layer Sepatu */}
+          <div className={styles.slotItem + ' ' + styles.slotShoes}>
+            {currentOutfit.sepatu.src ? (
+              <Image 
+                src={currentOutfit.sepatu.src} 
+                alt="Sepatu" 
+                width={300} height={200} 
+                className={styles.itemImage}
+              />
+            ) : <div className={styles.placeholder}>Pilih Sepatu</div>}
+          </div>
+        </div>
+      </div>
 
-        .styling-header p {
-          font-size: 0.875rem;
-          color: #6b7280;
-        }
+      {/* === CONTROL PANEL === */}
+      <div className={styles.controlPanel}>
+        <div className={styles.handleBar}></div>
+        
+        <div className={styles.panelHeader}>
+          <h2 className={styles.panelTitle}>Mix & Match</h2>
+          <button className={styles.saveButton} onClick={handleSaveDesign}>Simpan</button>
+        </div>
 
-        /* Show/Hide menu berdasarkan device */
-        .desktop-menu {
-          display: none;
-        }
+        {/* Tab Kategori */}
+        <div className={styles.tabsContainer}>
+          {tabs.map((tab) => (
+            <button 
+              key={tab.id}
+              className={`${styles.tabButton} ${activeTab === tab.id ? styles.active : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-        .mobile-menu {
-          display: block;
-        }
+        {/* Grid Item Pilihan */}
+        <div className={styles.itemsGrid}>
+          {filteredItems.map((item) => (
+            <div 
+              key={item.id}
+              className={`${styles.itemCard} ${currentOutfit[activeTab]?.id === item.id ? styles.selected : ''}`}
+              onClick={() => handleSelectItem(item)}
+            >
+              <Image 
+                src={item.src} 
+                alt={item.name} 
+                width={100} height={100} 
+                className={styles.itemThumbnail}
+              />
+            </div>
+          ))}
+        </div>
 
-        .content-wrapper {
-          margin-top: 2rem;
-        }
+        {/* Design Terakhir (Horizontal Scroll) */}
+        {savedDesigns.length > 0 && (
+            <div className={styles.historySection}>
+                <div className={styles.historyTitle}>Design Terakhir</div>
+                <div className={styles.historyList}>
+                    {savedDesigns.map((design) => (
+                        <div 
+                            key={design.id} 
+                            className={styles.historyCard}
+                            onClick={() => handleLoadDesign(design)}
+                        >
+                            <Image 
+                                src={design.atasan.src} 
+                                alt="saved" 
+                                width={60} height={60} 
+                                style={{objectFit:'contain'}} 
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )}
 
-        .content-card {
-          padding: 2.5rem 2rem;
-          border-radius: 24px;
-          text-align: center;
-          width: 100%;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .content-icon {
-          font-size: 4rem;
-          margin-bottom: 1.25rem;
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .content-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #1f2937;
-          margin-bottom: 0.75rem;
-        }
-
-        .content-description {
-          font-size: 0.95rem;
-          color: #4b5563;
-          line-height: 1.6;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-        }
-
-        /* Desktop Styling */
-        @media (min-width: 768px) {
-          .styling-page {
-            min-height: 100vh;
-            padding: 3rem 2rem;
-            padding-bottom: 2rem;
-          }
-
-          .styling-container {
-            max-width: 700px;
-          }
-
-          .styling-header {
-            margin-bottom: 2rem;
-          }
-
-          .styling-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-          }
-
-          .styling-header p {
-            font-size: 1.125rem;
-          }
-
-          /* Toggle menu visibility */
-          .desktop-menu {
-            display: block;
-          }
-
-          .mobile-menu {
-            display: none;
-          }
-
-          .content-wrapper {
-            margin-top: 3rem;
-          }
-
-          .content-card {
-            padding: 4rem 3rem;
-            border-radius: 32px;
-          }
-
-          .content-icon {
-            font-size: 5.5rem;
-            margin-bottom: 1.5rem;
-          }
-
-          .content-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-          }
-
-          .content-description {
-            font-size: 1.125rem;
-          }
-        }
-      `}</style>
+      </div>
     </div>
   );
 }
