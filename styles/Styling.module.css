@@ -1,185 +1,390 @@
-/* Container Utama */
+/* StylingFinal.module.css */
+
 .container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   background-color: #fdfbf7;
-  position: relative;
   overflow: hidden;
 }
 
-/* === AREA VISUAL (MOBILE: ATAS) === */
-.canvasSection {
-  flex: 1; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  padding-top: 4rem; 
-  position: relative;
-  background-color: #fdfbf7;
-  max-height: 55vh; 
-}
-
-.mannequinStage {
+/* === MANNEQUIN SECTION === */
+.mannequinSection {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 250px; 
-}
-
-/* Slot Item Responsif */
-.slotItem {
-  width: 100%;
-  display: flex;
   justify-content: center;
+  padding: 2rem 1rem;
   position: relative;
+  background: linear-gradient(180deg, #fdfbf7 0%, #f8f9fa 100%);
+  min-height: 55vh;
 }
 
-/* Styling Tumpukan Manekin (Mobile) */
-.slotTop { height: 160px; z-index: 10; margin-bottom: -20px; }
-.slotBottom { height: 200px; z-index: 5; margin-bottom: -30px; }
-.slotShoes { height: 80px; z-index: 1; }
-
-.itemImage {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
-}
-
-/* Placeholder */
-.placeholder {
-  width: 100%; height: 100%;
-  border: 2px dashed #d1d5db; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  color: #9ca3af; font-size: 0.8rem;
-}
-
-/* Tombol Info (FIXED: flex-direction) */
-.infoButtons {
-  position: absolute; 
-  top: 1rem; 
-  right: 1rem;
-  display: flex; 
-  flex-direction: column; /* Sudah diperbaiki dari flexDirection */
-  gap: 0.5rem; 
+.infoChips {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   z-index: 20;
 }
 
-.infoChip {
-  background: rgba(55, 65, 81, 0.9); 
+.chip {
+  background: #475569;
   color: white;
-  padding: 0.3rem 0.8rem; 
-  border-radius: 15px;
-  font-size: 0.7rem; 
-  font-weight: 600; 
-  border: none;
-}
-
-/* === PANEL KONTROL (BAGIAN MIX & MATCH) === */
-.controlPanel {
-  height: 45vh; 
-  width: 100%;
-  background-color: #ffffff;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem 1.5rem 0 1.5rem; 
-  z-index: 50;
-  position: relative;
-}
-
-/* Header Panel */
-.panelHeader {
-  flex-shrink: 0; 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.handleBar {
-  width: 40px; height: 4px;
-  background-color: #e5e7eb; border-radius: 10px;
-  margin: 0 auto 10px auto; flex-shrink: 0;
-}
-
-.panelTitle {
-  font-size: 1.1rem; font-weight: 700; color: #1f2937;
-}
-
-.saveButton {
-  background-color: #1f2937; color: white; border: none;
-  padding: 0.5rem 1rem; border-radius: 8px;
-  font-size: 0.8rem; font-weight: 600; cursor: pointer;
-}
-
-/* Tabs Kategori */
-.tabsContainer {
-  flex-shrink: 0; 
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: none;
-  border-bottom: 1px solid #f3f4f6;
-  margin-bottom: 10px;
-}
-
-.tabButton {
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  border: 1px solid #e5e7eb;
-  background: white; color: #6b7280;
-  font-size: 0.8rem; white-space: nowrap; transition: all 0.2s;
-}
-
-.tabButton.active {
-  background: #1f2937; color: white; border-color: #1f2937;
-}
-
-/* Grid Item */
-.itemsGrid {
-  flex: 1; 
-  overflow-y: auto; 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 0.8rem;
-  padding-bottom: 100px; 
-  padding-top: 5px;
-}
-
-.itemCard {
-  background: white;
-  border: 1px solid #f3f4f6;
-  border-radius: 12px;
-  aspect-ratio: 1 / 1; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem; 
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.itemCard.selected {
-  border: 2px solid #1f2937; 
-  background-color: #f9fafb;
+.chip:hover {
+  background: #334155;
+  transform: scale(1.05);
 }
 
-.itemThumbnail {
+.mannequinContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 350px;
+}
+
+.mannequinHead {
+  width: 70px;
+  height: 90px;
+  background: #e5e7eb;
+  border-radius: 50% 50% 45% 45%;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 20;
+}
+
+.bodyWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* LAYER ATASAN (Paling Atas) */
+.layerTop {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -20px;
+  z-index: 10;
+  position: relative;
+}
+
+/* LAYER BAWAHAN (Tengah) */
+.layerBottom {
+  width: 100%;
+  min-height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: -30px;
+  z-index: 5;
+  position: relative;
+}
+
+/* LAYER SEPATU (Paling Bawah) */
+.layerShoes {
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+}
+
+.outfitImage {
+  width: auto;
+  height: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.15));
+  transition: all 0.3s ease;
+}
+
+.placeholder {
   width: 100%;
   height: 100%;
-  object-fit: contain; 
+  min-height: 100px;
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3b8;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
+/* LABEL OUTFIT SAAT INI */
+.outfitLabel {
+  margin-top: 2rem;
+  background: white;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 250px;
+  max-width: 90%;
+}
+
+.labelItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.labelIcon {
+  font-size: 1.2rem;
+}
+
+.labelText {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* === CONTROL PANEL === */
+.controlPanel {
+  background: #ffffff;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  box-shadow: 0 -5px 30px rgba(0,0,0,0.08);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 50vh;
+  overflow: hidden;
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.tabButton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #94a3b8;
+}
+
+.tabActive {
+  background: #475569;
+  color: white;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+}
+
+.tabButton:hover:not(.tabActive) {
+  background: #f8fafc;
+}
+
+.tabIcon {
+  font-size: 1.5rem;
+}
+
+.tabLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* GRID ITEM (Pilihan Outfit) */
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  overflow-y: auto;
+  max-height: 250px;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.itemsGrid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.itemsGrid::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.itemsGrid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.itemCard {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  aspect-ratio: 1;
+}
+
+.itemCard:hover {
+  border-color: #94a3b8;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.itemSelected {
+  border-color: #475569 !important;
+  background: #f8fafc !important;
+  box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.1) !important;
+}
+
+.itemThumb {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.itemName {
+  font-size: 0.7rem;
+  text-align: center;
+  color: #64748b;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
+}
+
+/* ACTION BUTTONS */
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btnSecondary,
+.btnPrimary {
+  flex: 1;
+  padding: 0.9rem;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btnSecondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btnSecondary:hover {
+  background: #e2e8f0;
+}
+
+.btnPrimary {
+  background: #475569;
+  color: white;
+}
+
+.btnPrimary:hover {
+  background: #334155;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+}
+
+/* SAVED DESIGNS HISTORY */
 .historySection {
-  display: none; 
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.historyTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 0.75rem;
+}
+
+.historyScroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.historyCard {
+  min-width: 80px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.historyCard:hover {
+  background: #e2e8f0;
+  transform: scale(1.05);
+}
+
+.historyThumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.historyTime {
+  font-size: 0.65rem;
+  color: #64748b;
+  text-align: center;
 }
 
 /* === DESKTOP RESPONSIVE === */
@@ -187,33 +392,63 @@
   .container {
     flex-direction: row;
     height: 100vh;
-    padding-bottom: 0;
-    max-width: 1400px; margin: 0 auto;
   }
 
-  .canvasSection {
-    flex: 1; height: 100%; max-height: none;
-    padding-top: 0; border-right: 1px solid #e5e7eb;
+  .mannequinSection {
+    flex: 1.2;
+    min-height: auto;
   }
 
-  .slotTop { height: 280px; margin-bottom: -30px; }
-  .slotBottom { height: 320px; margin-bottom: -50px; }
-  .slotShoes { height: 150px; }
+  .mannequinContainer {
+    max-width: 450px;
+  }
+
+  .mannequinHead {
+    width: 90px;
+    height: 110px;
+  }
+
+  .layerTop {
+    min-height: 280px;
+    margin-bottom: -30px;
+  }
+
+  .layerBottom {
+    min-height: 300px;
+    margin-bottom: -50px;
+  }
+
+  .layerShoes {
+    min-height: 120px;
+  }
+
+  .outfitImage {
+    max-height: 300px;
+  }
 
   .controlPanel {
-    flex: 1; height: 100%; width: auto;
-    border-radius: 0; padding: 3rem; box-shadow: none;
+    flex: 1;
+    max-height: none;
+    border-radius: 0;
+    padding: 3rem 2rem;
+    overflow-y: auto;
   }
-
-  .handleBar { display: none; }
 
   .itemsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1.5rem;
+    max-height: none;
   }
-  
-  .historySection {
-    display: block; 
-    margin-top: 2rem;
+
+  .itemCard {
+    padding: 1rem;
+  }
+
+  .itemThumb {
+    height: 80px;
+  }
+
+  .itemName {
+    font-size: 0.8rem;
   }
 }

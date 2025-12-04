@@ -82,14 +82,6 @@ export default function WardrobePage() {
         </div>
       </div>
 
-      {/* 3. Schedule Banner */}
-      <div className={styles.scheduleBanner}>
-        <div>
-          <div className={styles.bannerTitle}>Schedule an outfit</div>
-          <div className={styles.bannerSubtitle}>Set up 50% complete</div>
-        </div>
-        <HiChevronRight size={20} color="#9ca3af" />
-      </div>
 
       {/* 4. Category Filters (Circles) */}
       <div className={styles.categoriesScroll}>
