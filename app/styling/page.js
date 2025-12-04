@@ -7,12 +7,18 @@ export default function StylingPage() {
   return (
     <div className={styles.container}>
       <div className={styles.imageWrapper}>
-        {/* Ganti '/styling-full.jpg' dengan nama file gambar Anda di folder public */}
+        {/* Gunakan trik ini untuk Next.js Image:
+           width={0} height={0} sizes="100vw" + style width: 100%, height: auto
+           Ini membuat gambar selebar layar HP, dan tingginya mengikuti proporsi asli (tidak gepeng/terpotong).
+        */}
         <Image 
           src="/styling-pangkas.jpg" 
           alt="Styling Outfit"
-          fill 
-          className={styles.fullImage}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className={styles.scrollableImage}
+          style={{ width: '100%', height: 'auto' }} 
           priority 
         />
       </div>

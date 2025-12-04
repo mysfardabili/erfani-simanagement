@@ -1,49 +1,49 @@
-/* ====== Styling.module.css (update) ====== */
-
+/* Container Utama */
 .container {
+  min-height: 100vh; /* Minimal setinggi layar */
   width: 100%;
-  background-color: #fdfbf7;
-  position: relative;
-  overflow: hidden;
-  height: calc(100dvh - 80px);
-  /* PENTING: pastikan tidak ada padding/margin */
-  padding: 0;
-  margin: 0;
+  background-color: #fdfbf7; /* Warna krem background */
+  
+  /* HAPUS 'height: 100dvh' dan 'overflow: hidden' agar bisa discroll */
+  overflow-y: auto; 
+  
   display: flex;
-  /* supaya wrapper memenuhi lebar */
-  align-items: stretch;
-  justify-content: center;
-}
-
-.imageWrapper {
-  position: relative;
-  /* pastikan mengambil seluruh lebar parent */
-  width: 100%;
-  height: 100%;
-  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  
+  /* Padding agar tidak nempel sisi */
   padding: 0;
+  
+  /* PENTING: Ruang di bawah agar bagian kaki tidak tertutup Menu Navigasi */
+  padding-bottom: 120px; 
 }
 
-/* fullImage: ubah menjadi cover agar memenuhi lebar layar */
-.fullImage {
-  object-fit: cover;       /* >> ini bikin edge-to-edge */
-  object-position: center; /* center crop */
+/* Wrapper Gambar */
+.imageWrapper {
   width: 100%;
-  height: 100%;
+  /* Hapus height 100% agar wrapper mengikuti tinggi gambar asli */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Gambar Style */
+.scrollableImage {
+  width: 100%;
+  height: auto; /* KUNCI: Tinggi menyesuaikan proporsi gambar */
   display: block;
 }
 
-/* === TAMPILAN DESKTOP (Layar Besar) === */
+/* === TAMPILAN DESKTOP === */
 @media (min-width: 768px) {
   .container {
-    /* Di Desktop tidak ada menu bawah, jadi gunakan Full Height */
-    height: 100vh;
-    max-width: 100%;
+    padding-bottom: 2rem; /* Desktop tidak butuh padding besar di bawah */
   }
   
   .imageWrapper {
-    /* Batasi lebar gambar di desktop agar tidak terlalu raksasa */
-    max-width: 600px;
-    margin: 0 auto;
+    /* Di desktop, batasi lebar agar gambar tidak terlalu raksasa */
+    max-width: 500px; 
+    margin-top: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   }
 }
