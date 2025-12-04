@@ -2,7 +2,7 @@
   .container {
     min-height: 100vh;
     background-color: #fafafa;
-    padding-bottom: 120px; /* Ruang untuk bottom nav & FAB */
+    padding-bottom: 100px; /* Ruang untuk bottom nav & FAB */
     position: relative;
     overflow-x: hidden;
   }
