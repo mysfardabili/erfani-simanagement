@@ -1,8 +1,8 @@
 import { Inter } from 'next/font/google';
 import MainLayout from './components/MainLayout';
+import { UserProvider } from './context/UserContext'; // Import Provider
 import './globals.css';
 
-// Menggunakan font Inter sebagai pengganti font default
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -14,7 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MainLayout>{children}</MainLayout>
+        <UserProvider> {/* Pasang Provider di sini */}
+          <MainLayout>{children}</MainLayout>
+        </UserProvider>
       </body>
     </html>
   );
